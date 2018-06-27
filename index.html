@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>VueJS NodeJS and Express example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://localhost:8888/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+    $(function () {
+        var socket = io.connect("http://localhost:8888");
+        $('form').submit(function(event){
+             event.preventDefault();
+             var data = {
+                 user:$("#user").val(),
+                 message:$("#message").val()
+             }
+             socket.emit('data-message', data);
+        });
+        socket.on('send-message', function(msg){
+            
+            var chuoi ='<span class="sms-1"><i class="username">'+msg.user+'</i>:'+msg.message+'</span>';
+            $('.show-message').append(chuoi);
+        });
+    });
+    </script>
+</head>
+  <body>
+    <div id="app"></div>
+    <script src="bundle.js"></script>
+  </body>
+</html>
